@@ -12,4 +12,4 @@ const Schema = new SchemaMongo({
 
 
 
-module.exports = mongoose.model("people", Schema)
+module.exports = mongoose.model("persona", Schema)

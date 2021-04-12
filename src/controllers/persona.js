@@ -1,6 +1,6 @@
 const peopleController = {}
 
-const People = require('../models/people.js')
+const People = require('../models/persona.js')
 
 
 peopleController.detail = async(req, res) => {}
