@@ -11,6 +11,8 @@ personaController.delete = async(req, res) => {}
 
 personaController.create = async(req, res) => {}
 
+personaController.getPeople = async(req, res) => {}
+
 
 
 

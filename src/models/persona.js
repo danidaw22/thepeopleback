@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const SchemaMongo = mongoose.Schema
 
 const Schema = new SchemaMongo({
-    name: { type: String, require: true, unique: true },
+    name: { type: String, require: true },
     date_of_birthday: { type: String, require: true },
     date_of_death: { type: Date },
     job: { type: String, require: true },
