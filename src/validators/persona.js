@@ -3,7 +3,7 @@ const Joi = require('joi')
 const schema = Joi.object({
     name: Joi.string().min(2).required(),
     surname: Joi.string().min(2).required(),
-    date_of_birthday: Joi.date().required(),
+    date_of_birthday: Joi.date().less('now').required(),
     date_of_death: Joi.date(),
     job: Joi.string().min(2).required(),
     bio: Joi.string().min(2).max(255),

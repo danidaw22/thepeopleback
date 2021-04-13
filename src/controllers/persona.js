@@ -107,27 +107,49 @@ personaController.delete = async(req, res) => {
 
 personaController.getPeople = async(req, res) => {
     const filter = req.query.filter
-    const filter2 = req.query.filter2
+    const fechaInicio = req.query.fechaInicio
+    const fechaFinal = req.query.fechaFinal
+
     try {
 
-        const query = {
-            $or: [{
-                    name: new RegExp(filter, 'i')
-                },
-                {
-                    surname: new RegExp(filter, 'i')
-                },
-                {
+        if (!filter && (!fechaInicio || !fechaFinal)) {
+            const personas = await Persona.find()
+            res.json(personas)
+        } else {
+
+            const and = []
+
+            if (filter) {
+                and.push({
+                    $or: [{
+                        fullname: new RegExp(filter, 'i')
+                    }]
+                })
+            }
+
+            if (fechaInicio && fechaFinal) {
+                and.push({
                     date_of_birthday: {
-                        $gte: filter,
-                        $lt: filter2
+                        $gte: new Date(fechaInicio),
+                        $lt: new Date(fechaFinal)
                     }
-                }
-            ]
+                })
+            }
+
+            const personas = await Persona.aggregate(
+                [
+                    { $addFields: { fullname: { $concat: ["$name", " ", "$surname"] } } },
+                    {
+                        $match: { $and: and }
+                    }
+                ]
+            )
+
+            res.json(personas)
         }
 
-        const personas = await Persona.find(query)
-        res.json(personas)
+
+
     } catch (err) {
         console.log(err)
         res.status(500).send(err.message)
