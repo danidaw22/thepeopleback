@@ -3,11 +3,14 @@ const SchemaMongo = mongoose.Schema
 
 const Schema = new SchemaMongo({
     name: { type: String, require: true },
-    date_of_birthday: { type: String, require: true },
+    surname: { type: String, require: true },
+    date_of_birthday: { type: Date, require: true },
     date_of_death: { type: Date },
     job: { type: String, require: true },
     bio: { type: String },
-    photo: { type: String }
+    photo: { type: String },
+    savedAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 })
 
 
