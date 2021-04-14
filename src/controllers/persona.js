@@ -1,6 +1,7 @@
 const personaController = {}
 const Persona = require('../models/persona.js')
 const personaValidator = require('../validators/persona')
+const authJWT = require("../auth/jwt")
 
 personaController.create = async(req, res) => {
     const name = req.body.name
