@@ -4,8 +4,7 @@ const SchemaMongo = mongoose.Schema
 const Schema = new SchemaMongo({
     name: { type: String, require: true },
     surname: { type: String, require: true },
-    date_of_birthday: { type: Date, require: true },
-    date_of_death: { type: Date },
+    birthdate: { type: Date, require: true },
     job: { type: String, require: true },
     bio: { type: String },
     photo: { type: String },

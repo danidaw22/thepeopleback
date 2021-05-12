@@ -9,8 +9,7 @@ personaController.create = async(req, res) => {
     const bio = req.body.bio
     const job = req.body.job
     const photo = req.body.photo
-    const date_of_birthday = req.body.date_of_birthday
-    const date_of_death = req.body.date_of_death
+    const birthdate = req.body.birthdate
 
     /*if (!name || !surname || !job || !date_of_birthday) {
         res.status(400).send()
@@ -28,16 +27,9 @@ personaController.create = async(req, res) => {
     }
 
     //Comprobacion fecha de fallecimiento es mayor que fecha nacimiento
-    if (date_of_death) {
-        if (date_of_death < date_of_birthday) {
-            res.status(400).send('La fecha de fallecimiento es incorrecta')
-            return
-        }
-    }
-
 
     try {
-        const persona = new Persona({ name: name, surname: surname, bio: bio, job: job, photo: photo, date_of_birthday: date_of_birthday, date_of_death: date_of_death })
+        const persona = new Persona({ name: name, surname: surname, bio: bio, job: job, photo: photo, birthdate: birthdate })
         await persona.save()
         res.status(204).send("Agregado correctamente")
         return
@@ -64,8 +56,7 @@ personaController.update = async(req, res) => {
     const bio = req.body.bio
     const job = req.body.job
     const photo = req.body.photo
-    const date_of_birthday = req.body.date_of_birthday
-    const date_of_death = req.body.date_of_death
+    const birthdate = req.body.birthdate
 
     const validation = personaValidator.validate(req.body)
 
@@ -77,16 +68,9 @@ personaController.update = async(req, res) => {
         return
     }
 
-    //Comprobacion fecha de fallecimiento es mayor que fecha nacimiento
-    if (date_of_death) {
-        if (date_of_death < date_of_birthday) {
-            res.status(400).send('La fecha de fallecimiento es incorrecta')
-            return
-        }
-    }
 
     try {
-        await Persona.findByIdAndUpdate(req.params.id, { name: name, surname: surname, bio: bio, job: job, photo: photo, date_of_birthday: date_of_birthday, date_of_death: date_of_death, updatedAt: Date.now() })
+        await Persona.findByIdAndUpdate(req.params.id, { name: name, surname: surname, bio: bio, job: job, photo: photo, birthdate: birthdate, updatedAt: Date.now() })
         res.status(204).send()
 
     } catch (err) {
@@ -130,7 +114,7 @@ personaController.getPeople = async(req, res) => {
 
             if (fechaInicio && fechaFinal) {
                 and.push({
-                    date_of_birthday: {
+                    birthdate: {
                         $gte: new Date(fechaInicio),
                         $lt: new Date(fechaFinal)
                     }

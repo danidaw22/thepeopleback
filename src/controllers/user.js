@@ -57,7 +57,8 @@ userController.login = async(req, res) => {
 
         return res.send({
             access_token: dataToken[0],
-            expires_in: dataToken[1]
+            expires_in: dataToken[1],
+            email: email
         })
     } catch (err) {
         console.log(err)
